@@ -2,7 +2,6 @@ package name.mazgalov.search.indexer
 
 import name.mazgalov.search.indexer.internal.IndexerImpl
 import org.apache.lucene.document.Document
-import org.apache.lucene.store.Directory
 import java.nio.file.Path
 
 /**
@@ -10,6 +9,7 @@ import java.nio.file.Path
  * @author <a href="mailto:todor@mazgalov.name">Todor Mazgalov</a>
  */
 interface Indexer {
+    fun openIndex()
     fun add(documents: List<Document>)
     fun commit()
     fun delete()

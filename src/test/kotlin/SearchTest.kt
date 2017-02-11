@@ -44,6 +44,7 @@ class SearchTest {
         val indexLocation = Paths.get(System.getProperty("index.location"))
 
         val indexer: Indexer = Indexer.create(indexLocation)
+        indexer.openIndex()
         indexer.delete()
         indexer.add(listOf(document1, document2, document3))
         indexer.commit()

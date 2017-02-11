@@ -7,15 +7,20 @@ import org.apache.lucene.index.IndexWriterConfig
 import org.apache.lucene.store.Directory
 import org.apache.lucene.store.FSDirectory
 import java.nio.file.Path
-import java.util.*
 
 /**
  * Created on 10-Feb-17.
  * @author <a href="mailto:todor@mazgalov.name">Todor Mazgalov</a>
  */
-class IndexerImpl(indexLocation: Path): Indexer {
-    private var index: Directory = FSDirectory.open(indexLocation)
-    private val indexWriter: IndexWriter = IndexWriter(index, IndexWriterConfig())
+class IndexerImpl(val indexLocation: Path): Indexer {
+    lateinit var index: Directory
+
+    lateinit private var indexWriter: IndexWriter
+
+    override fun openIndex() {
+        index = FSDirectory.open(indexLocation)
+        indexWriter = IndexWriter(index, IndexWriterConfig())
+    }
 
     override fun add(documents: List<Document>) {
         indexWriter.addDocuments(documents)
