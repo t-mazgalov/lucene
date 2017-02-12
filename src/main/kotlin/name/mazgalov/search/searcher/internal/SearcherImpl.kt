@@ -19,9 +19,7 @@ class SearcherImpl(val indexLocation: Path): Searcher {
         val directory: Directory = FSDirectory.open(indexLocation)
         val indexSearcher: IndexSearcher = IndexSearcher(DirectoryReader.open(directory))
         val documents:MutableList<Document> = mutableListOf()
-        for(scoreDoc in indexSearcher.search(query, 100).scoreDocs) {
-            documents.add(indexSearcher.doc(scoreDoc.doc))
-        }
+        indexSearcher.search(query, 100).scoreDocs.mapTo(documents) { indexSearcher.doc(it.doc) }
         return documents
     }
 }
